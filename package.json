@@ -29,6 +29,7 @@
     "xbee-api": "^0.6.0",
     "zcl-id": "github:dhylands/zcl-id#moziot-changes",
     "zcl-packet": "github:dhylands/zcl-packet#moziot-changes",
+    "unpi": "^1.1.0",
     "zigbee-zdo": "git+https://github.com/mozilla-iot/zigbee-zdo.git"
   },
   "devDependencies": {

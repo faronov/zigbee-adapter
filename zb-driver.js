@@ -430,6 +430,7 @@ class ZigbeeDriver {
         'sendOnSuccess',
         'callback',
         'timeoutFunc',
+        'waitTimeout',
         'waitRetryCount',
         'waitRetryMax',
         'waitRetryTimeout',
@@ -713,13 +714,17 @@ class ZigbeeDriver {
           if (!this.waitFrame.hasOwnProperty('waitRetryMax')) {
             this.waitFrame.waitRetryMax = WAIT_RETRY_MAX;
           }
+          
           let timeoutDelay = WAIT_TIMEOUT_DELAY;
-          if (this.waitFrame.hasOwnProperty('waitRetryTimeout')) {
-            timeoutDelay = this.waitFrame.waitRetryTimeout;
-          } else if (this.lastFrameSent &&
-                     this.lastFrameSent.hasOwnProperty('profileId')) {
-            // Frames which don't have a profileId, aren't directed to a node
-            // (i.e. AT commands or other driver specific commands.)
+
+          if (this.waitFrame.hasOwnProperty('waitTimeout')) {
+            timeoutDelay = this.waitFrame.waitTimeout;
+          }
+          
+          // Frames which don't have a profileId, aren't directed to a node
+          // (i.e. AT commands or other driver specific commands.)
+          if (this.lastFrameSent &&
+              this.lastFrameSent.hasOwnProperty('profileId')) {
             const node = this.adapter.findNodeFromTxFrame(this.lastFrameSent);
             if (node && node.extendedTimeout) {
               timeoutDelay = EXTENDED_TIMEOUT_DELAY;
